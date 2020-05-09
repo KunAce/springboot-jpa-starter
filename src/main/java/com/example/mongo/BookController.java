@@ -1,6 +1,7 @@
 package com.example.mongo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,31 @@ public class BookController {
         bookDao.insert(books);
         List<Book> books1 = bookDao.findByAuthorContains("Java");
         System.out.println(books1);
-        Book book = bookDao.findByNameEquals("Mongo");
+        Book book = bookDao.findByNameEquals("MongoBook");
+        System.out.println(book);
+    }
+
+    @Autowired
+    MongoTemplate mongoTemplate;
+    @GetMapping("/test2")
+    public void test2() {
+        List<Book> books = new ArrayList<>();
+        Book b1 = new Book();
+        b1.setId(3);
+        b1.setName("C++Book");
+        b1.setAuthor("C++Author");
+        books.add(b1);
+
+        Book b2 = new Book();
+        b2.setId(4);
+        b2.setName("GolangBook");
+        b2.setAuthor("GolangAuthor");
+        books.add(b2);
+        mongoTemplate.insertAll(books);
+
+        List<Book> list = mongoTemplate.findAll(Book.class);
+        System.out.println(list);
+        Book book = mongoTemplate.findById(4, Book.class);
         System.out.println(book);
     }
 }
