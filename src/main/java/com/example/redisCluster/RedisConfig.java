@@ -53,6 +53,7 @@ public class RedisConfig {
     StringRedisTemplate stringRedisTemplate() {
         StringRedisTemplate stringRedisTemplate = new StringRedisTemplate(jedisConnectionFactory());
         stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
+        stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
         return stringRedisTemplate;
     }
 
